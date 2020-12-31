@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   },
 });
 
-const ModalComponent = ({ visible, CloseModal }) => {
+const ModalComponent = (props) => {
   const classes = useStyles();
 
   const [caption, setcaption] = useState("");
@@ -34,26 +34,27 @@ const ModalComponent = ({ visible, CloseModal }) => {
 
   const dispatch = useDispatch();
 
-  const SubmitHandler = (e) => {
+  const SubmitHandler = async (e) => {
     e.preventDefault();
     console.log(photo);
-    dispatch(post(name, username, caption, photo));
+    await dispatch(post(name, username, caption, photo));
+
     window.location = "/";
   };
   return (
     <Modal
-      visible={visible}
+      visible={props.visible}
       width="230"
       className="simple-modal"
       height="400"
       effect="fadeInUp"
-      onClickAway={CloseModal}
+      onClickAway={props.CloseModal}
     >
       <div className="modal">
         <a
           href="javascript:void(0);"
           className="modal-close"
-          onClick={CloseModal}
+          onClick={props.CloseModal}
         >
           <IconButton>
             <CancelOutlinedIcon style={{ color: "white" }} />
